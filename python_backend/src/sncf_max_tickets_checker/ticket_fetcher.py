@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 from aiohttp import ClientSession
 
@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 # Collections MongoDB
 alerts_collection = settings.mongo_db["alerts"]
+sent_alerts_collection = settings.mongo_db["sent_alerts"]  # Collection pour les alertes envoyées avec UUID
 
 
 class TicketFetcher:
@@ -66,6 +67,7 @@ class TicketFetcher:
     def check_alerts(self, tickets):
         """
         Vérifie si les tickets récupérés correspondent aux alertes stockées dans MongoDB.
+        Si une alerte correspond, vérifie si un email a déjà été envoyé pour ce ticket.
         Args:
             tickets (list): Liste des tickets récupérés.
         """
@@ -90,8 +92,48 @@ class TicketFetcher:
                     if not (heure_depart_debut <= heure_depart_ticket <= heure_depart_fin):
                         continue
 
-                # Si tout correspond, envoyer l'alerte par email
+                # Vérifier si un email a déjà été envoyé pour cette alerte en utilisant l'UUID
+                if self.has_email_been_sent(alert['alert_id'], ticket):
+                    logger.info(f"Email already sent for alert {alert['alert_id']} to {alert['email']}, skipping.")
+                    continue
+
+                # Si tout correspond et qu'aucun email n'a été envoyé, envoyer l'alerte par email
                 send_email_alert(alert['email'], ticket)
+
+                # Enregistrer que l'alerte a été envoyée pour ce ticket
+                self.record_sent_alert(alert['alert_id'], ticket)
+
+    def has_email_been_sent(self, alert_id: str, ticket: dict) -> bool:
+        """
+        Vérifie si un email a déjà été envoyé pour cette alerte (par UUID).
+        Args:
+            alert_id (str): L'UUID de l'alerte.
+            ticket (dict): Informations sur le ticket.
+
+        Returns:
+            bool: True si l'email a déjà été envoyé, sinon False.
+        """
+        return sent_alerts_collection.find_one({
+            "alert_id": alert_id,
+            "train_no": ticket['train_no'],
+            "date": ticket['date'],
+            "heure_depart": ticket['heure_depart']
+        }) is not None
+
+    def record_sent_alert(self, alert_id: str, ticket: dict):
+        """
+        Enregistre qu'un email a été envoyé pour cette alerte (par UUID) afin d'éviter les doublons.
+        Args:
+            alert_id (str): L'UUID de l'alerte.
+            ticket (dict): Informations sur le ticket.
+        """
+        sent_alerts_collection.insert_one({
+            "alert_id": alert_id,
+            "train_no": ticket['train_no'],
+            "date": ticket['date'],
+            "heure_depart": ticket['heure_depart'],
+            "created_at": datetime.now(timezone.utc)
+        })
 
     async def get_max_tickets(self, session: ClientSession):
         """
