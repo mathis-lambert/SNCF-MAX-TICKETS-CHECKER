@@ -74,6 +74,7 @@ async def start_checking(alert: Alert):
     Crée une nouvelle alerte et démarre la vérification des tickets en tâche de fond.
     """
     client = clients_collection.find_one({"email": alert.email})
+    alert.alert_id = str(uuid.uuid4())
 
     if not client:
         # Si le client n'existe pas, créer un nouveau client

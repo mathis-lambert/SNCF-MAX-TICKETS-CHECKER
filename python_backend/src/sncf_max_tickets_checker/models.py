@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 class Alert(BaseModel):
-    alert_id: str = str(uuid.uuid4())
+    alert_id: str
     origine_iata: str
     destination_iata: str
     date: str
@@ -17,5 +17,5 @@ class Alert(BaseModel):
 
 class Client(BaseModel):
     email: str
-    client_id: str = str(uuid.uuid4())
+    client_id: str
     alerts: List[Alert] = []
