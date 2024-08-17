@@ -1,5 +1,6 @@
 import logging
 import smtplib
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -44,15 +45,19 @@ def send_email_alert(to_email: str, ticket: dict):
           <p>Si vous n'avez pas encore l'application SNCF Connect, vous pouvez la télécharger ici :</p>
           <ul>
               <li><a href="https://apps.apple.com/fr/app/sncf-connect-trains-trajets/id343889987?ppid=3cf9afb7-bb5d-4dfd-babf-3f577c46076f" target="_blank">Télécharger sur l'App Store</a></li>
-              <li><a href="https://play.google.com/store/apps/details?id=com.vsct.vsc.mobile.horaireetreso.android" target="_blank">Télécharger sur Google Play</a></li>
+              <li><a href="https://play.google.com/store/apps/details?id=com.vsct.vsc.mobile.horaireetresa.android" target="_blank">Télécharger sur Google Play</a></li>
           </ul>
-          <p>Merci d'utiliser notre service d'alerte SNCF.</p>
+          <p>Merci d'utiliser mon service d'alerte.</p>
+          <p>À bientôt !</p>
           <br>
           <pre>Ceci est un email automatique, merci de ne pas y répondre.</pre>
           <br>
             <hr>
             <p>Vous recevez cet email car vous avez souscrit à une alerte SNCF.</p>
-            <p>Pour vous désinscrire, veuillez contacter contact.mathislambert@gmail.com.</p>
+            <p>Vous pouvez vous désinscrire à tout moment en supprimant votre alerte sur le site.</p>
+            <hr>
+            <p>© {datetime.now().year} Mathis LAMBERT. Tous droits réservés.</p>
+            <p>Adresse de contact : contact.mathislambert@gmail.com</p>
       </body>
       </html>
       """
