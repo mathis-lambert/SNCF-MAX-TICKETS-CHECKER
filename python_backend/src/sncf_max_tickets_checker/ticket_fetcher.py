@@ -148,7 +148,7 @@ class TicketFetcher:
             # Construire la requête pour chaque alerte
             where_clause = f"origine_iata=\"{alert['origine_iata']}\" AND destination_iata=\"{alert['destination_iata']}\""
             if alert.get('date'):
-                where_clause += f" AND date=\"{alert['date']}\""
+                where_clause += f" AND date>=\"{alert['date']}\" AND date<=\"{alert['date']}\""
 
             tickets = await self.fetch_tickets(where_clause, session)
             if tickets:
