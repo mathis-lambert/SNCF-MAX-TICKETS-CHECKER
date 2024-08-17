@@ -91,9 +91,5 @@ async def start_checking(alert: Alert):
     # Insérer l'alerte dans la collection MongoDB
     alert_id = alerts_collection.insert_one(alert.dict()).inserted_id
 
-    # Configurer les paramètres pour la recherche de tickets
-    ticket_fetcher = TicketFetcher()
-    ticket_fetcher.set_params(alert.origine_iata, alert.destination_iata)
-
     return {"message": f"Checking started, alert_id: {str(alert_id)}"}
 
