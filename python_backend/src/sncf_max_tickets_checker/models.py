@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 class Alert(BaseModel):
-    alert_id: str
+    alert_id: str = str(uuid.uuid4())
     origine_iata: str
     destination_iata: str
     date: str
