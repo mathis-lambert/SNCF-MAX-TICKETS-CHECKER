@@ -56,10 +56,10 @@ async def delete_alert(email: str, alert_id: str):
     Returns:
         dict: Message confirmant la suppression ou indiquant que l'alerte n'a pas été trouvée.
     """
-    alert = alerts_collection.find_one({"_id": ObjectId(alert_id), "email": email})
+    alert = alerts_collection.find_one({"alert_id": alert_id, "email": email})
 
     if alert:
-        result = alerts_collection.delete_one({"_id": ObjectId(alert_id)})
+        result = alerts_collection.delete_one({"alert_id": alert_id, "email": email})
         if result.deleted_count > 0:
             return {"message": "Alerte supprimée avec succès."}
         else:
