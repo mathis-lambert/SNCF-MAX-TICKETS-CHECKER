@@ -37,6 +37,7 @@ class TicketFetcher:
             'timezone': self.timezone,
             'lang': self.lang
         }
+
         try:
             logger.info(f"Fetching tickets with params: {params}")
             async with session.get(self.base_url, params=params) as a_response:
@@ -146,6 +147,12 @@ class TicketFetcher:
         for alert in alerts:
             # Construire la requête pour chaque alerte
             where_clause = f"origine_iata=\"{alert['origine_iata']}\" AND destination_iata=\"{alert['destination_iata']}\""
+            if alert.get('date'):
+                where_clause += f" AND date=\"{alert['date']}\""
+
+            if alert.get('heure_depart_debut') and alert.get('heure_depart_fin'):
+                where_clause += f" AND heure_depart>=\"{alert['heure_depart_debut']}\" AND heure_depart<=\"{alert['heure_depart_fin']}\""
+
             tickets = await self.fetch_tickets(where_clause, session)
             if tickets:
                 self.check_alerts(tickets)
