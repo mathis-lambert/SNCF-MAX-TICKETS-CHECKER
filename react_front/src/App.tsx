@@ -15,7 +15,7 @@ interface Alert {
 function App() {
     const [apiUrl] = useState(import.meta.env.VITE_API_URL)
     const [email, setEmail] = useState('')
-    const [authenticated, setAuthenticated] = useState(true)
+    const [authenticated, setAuthenticated] = useState(false)
     const [alerts, setAlerts] = useState<Alert[]>([])
     const [origine_iata, setOrigineIata] = useState('')
     const [destination_iata, setDestinationIata] = useState('')
