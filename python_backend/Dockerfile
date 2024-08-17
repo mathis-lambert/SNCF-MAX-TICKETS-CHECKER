@@ -4,7 +4,7 @@ FROM python:3.9-slim
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-COPY . .
+COPY .. .
 
 # Installer les dépendances nécessaires
 RUN pip install --no-cache-dir .

@@ -1,18 +1,18 @@
 services:
   sncf_max_tickets_checker:
-    build: .
+    build: ./python_backend
     container_name: sncf_max_tickets_checker
     ports:
-      - "8000:8000"
+      - "9091:9091"
     volumes:
-      - .:/app
-      - .env:/app/.env
+      - ./python_backend/.env/:/app/.env
+      - ./python_backend/:/app
     environment:
       - MAX_TICKETS_BASE_URL=https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/tgvmax/records
       - SMTP_SERVER=smtp.gmail.com
       - SMTP_PORT=587
       - SMTP_USER=contact.mathislambert@gmail.com
-      - SMTP_PASSWORD=/!\password/!\
+      - SMTP_PASSWORD=/!\ CHANGE_ME /!\
     networks:
       - sncf_network
     restart: always
