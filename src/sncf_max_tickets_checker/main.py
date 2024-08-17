@@ -10,7 +10,7 @@ app.include_router(alert_routes.router)
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=9091)
 
 
 # Ajout d'un événement pour fermer proprement la session HTTP à l'arrêt du serveur
