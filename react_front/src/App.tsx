@@ -26,7 +26,7 @@ function App() {
 
     async function createAlert(e: React.FormEvent) {
         e.preventDefault()
-        const response = await fetch(`${apiUrl}/alerts`, {
+        const response = await fetch(`${apiUrl}/start-checking/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,6 +44,21 @@ function App() {
         const data = await response.json()
         if (response.ok) {
             setAlerts([...alerts, data])
+        }
+        await getAlerts()
+    }
+
+    async function deleteAlert(alert_id: string) {
+        const response = await fetch(`${apiUrl}/alerts/?email=${email}&alert_id=${alert_id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json()
+        if (response.ok) {
+            console.log('Alert deleted:', data)
+            setAlerts(alerts.filter((alert) => alert.alert_id !== alert_id))
         }
         await getAlerts()
     }
@@ -111,7 +126,7 @@ function App() {
                             <label htmlFor="train_no">Numéro de train :</label>
                             <input type="text" id="train_no" name="train_no"
                                    onChange={(e) => setTrainNo(e.target.value)}
-                                   value={train_no} required/>
+                                   value={train_no}/>
                         </div>
                         <div className={"input_box"}>
                             <label htmlFor="heure_depart_debut">Heure de départ début :</label>
@@ -141,7 +156,7 @@ function App() {
                                 </div>
                                 <div className="alert_actions">
                                     <button>Modifier</button>
-                                    <button>Supprimer</button>
+                                    <button onClick={() => deleteAlert(alert.alert_id)}>Supprimer</button>
                                 </div>
                             </div>
                         ))}
