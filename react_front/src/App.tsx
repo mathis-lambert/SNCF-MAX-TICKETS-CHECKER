@@ -72,7 +72,16 @@ function App() {
                 setAlerts(data)
                 setAuthenticated(true)
             } else {
-                console.error('Error:', data)
+                if (Object.keys(data).includes('detail')) {
+                    if (data.detail === 'Aucune alerte trouvée pour cet utilisateur.') {
+                        setAuthenticated(true)
+                        setAlerts([])
+                    } else {
+                        console.error('Error:', data)
+                    }
+                } else {
+                    console.error('Error:', data)
+                }
             }
         } catch (error) {
             console.error('Error:', error)
