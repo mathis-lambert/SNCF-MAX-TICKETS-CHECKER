@@ -30,7 +30,8 @@ class Settings:
         # Construction de l'URI avec nom d'utilisateur et mot de passe
         uri_with_auth = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASSWORD}@{self.MONGO_HOST}:{self.MONGO_PORT}/{self.MONGO_DB_NAME}?authSource=admin"
         try:
-            logger.info("Connexion à la base de données MongoDB...")
+            logger.info("Connexion à la base de données MongoDB avec les informations suivantes:")
+            logger.info(f"URI: {uri_with_auth}")
             self.mongo_client = MongoClient(uri_with_auth)
             self.mongo_db = self.mongo_client[self.MONGO_DB_NAME]
             logger.info("Connexion à la base de données MongoDB établie.")
