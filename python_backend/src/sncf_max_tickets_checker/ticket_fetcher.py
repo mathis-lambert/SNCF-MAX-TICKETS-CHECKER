@@ -150,9 +150,6 @@ class TicketFetcher:
             if alert.get('date'):
                 where_clause += f" AND date=\"{alert['date']}\""
 
-            if alert.get('heure_depart_debut') and alert.get('heure_depart_fin'):
-                where_clause += f" AND heure_depart>=\"{alert['heure_depart_debut']}\" AND heure_depart<=\"{alert['heure_depart_fin']}\""
-
             tickets = await self.fetch_tickets(where_clause, session)
             if tickets:
                 self.check_alerts(tickets)
