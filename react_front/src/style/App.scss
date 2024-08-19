@@ -55,6 +55,7 @@
       flex-direction: row;
       justify-content: space-between;
       gap: 1rem;
+      margin-top: 1rem;
 
       button {
         padding: 0.5em 1em;
@@ -62,6 +63,7 @@
         border: none;
         cursor: pointer;
         transition: background-color 0.3s;
+        width: 100%;
 
         &.delete {
           background-color: #ff0000;
