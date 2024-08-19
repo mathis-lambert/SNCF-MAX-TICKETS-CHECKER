@@ -29,3 +29,26 @@
     }
   }
 }
+
+.alerts {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 790px;
+  padding: 1rem;
+  gap: 1rem;
+
+  .alert {
+    padding: 1em;
+    border-radius: 8px;
+    color: #1a1a1a;
+
+    & .alert_info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+
+
+}

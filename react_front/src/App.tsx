@@ -157,14 +157,12 @@ function App() {
                         {alerts.map((alert: Alert) => (
                             <div className="alert" key={alert.alert_id}>
                                 <div className="alert_info">
-                                    <span>{alert.origine_iata}</span>
-                                    <span>{alert.destination_iata}</span>
-                                    <span>{alert.date}</span>
-                                    <span>{alert.train_no}</span>
-                                    <span>{alert.heure_depart_debut} - {alert.heure_depart_fin}</span>
+                                    <span>{alert.origine_iata} -{">"} {alert.destination_iata}</span>
+                                    <span>{new Date(alert.date).toLocaleDateString()}</span>
+                                    <span>Train N°{alert.train_no}</span>
+                                    <span>Plage horaire : {alert.heure_depart_debut} - {alert.heure_depart_fin}</span>
                                 </div>
                                 <div className="alert_actions">
-                                    <button>Modifier</button>
                                     <button onClick={() => deleteAlert(alert.alert_id)}>Supprimer</button>
                                 </div>
                             </div>
