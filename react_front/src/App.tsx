@@ -159,11 +159,10 @@ function App() {
                                 <div className="alert_info">
                                     <span>{alert.origine_iata} -{">"} {alert.destination_iata}</span>
                                     <span>{new Date(alert.date).toLocaleDateString()}</span>
-                                    <span>Train N°{alert.train_no}</span>
                                     <span>Plage horaire : {alert.heure_depart_debut} - {alert.heure_depart_fin}</span>
                                 </div>
                                 <div className="alert_actions">
-                                    <button onClick={() => deleteAlert(alert.alert_id)}>Supprimer</button>
+                                    <button className={"delete"} onClick={() => deleteAlert(alert.alert_id)}>Supprimer</button>
                                 </div>
                             </div>
                         ))}

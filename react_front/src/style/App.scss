@@ -32,7 +32,9 @@
 
 .alerts {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
   margin: 0 auto;
   max-width: 790px;
   padding: 1rem;
@@ -41,14 +43,35 @@
   .alert {
     padding: 1em;
     border-radius: 8px;
-    color: #1a1a1a;
 
     & .alert_info {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
+
+    & .alert_actions {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 1rem;
+
+      button {
+        padding: 0.5em 1em;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &.delete {
+          background-color: #ff0000;
+          color: #fff;
+
+          &:hover {
+            background-color: #ff3333;
+          }
+        }
+      }
+    }
   }
-
-
 }
